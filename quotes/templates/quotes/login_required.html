@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Только для зарегистрированных{% endblock %}
+{% block content %}
+<article class="secondary">
+    <h2>Добавление цитаты недоступно</h2>
+    <p>Добавлять цитаты могут только зарегистрированные пользователи.</p>
+    <nav style="margin-top: 2rem;">
+        <a class="contrast" href="/login/?next=/add/">Войти</a>
+        <span style="margin:0 1em;opacity:.5;">или</span>
+        <a class="contrast" href="/signup/">Зарегистрироваться</a>
+    </nav>
+</article>
+{% endblock %}

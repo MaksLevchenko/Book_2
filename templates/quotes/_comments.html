@@ -1,0 +1,14 @@
+<div class="comments" id="comments">
+  {% if comments %}
+    <ul>
+      {% for c in comments %}
+        {% if not c.parent %}
+          {% include 'quotes/_comment_item.html' with comment=c %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">Пока нет комментариев</p>
+  {% endif %}
+</div>
+

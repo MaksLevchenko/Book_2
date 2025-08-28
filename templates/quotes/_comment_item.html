@@ -1,0 +1,27 @@
+<li id="comment-{{ comment.id }}" data-comment-id="{{ comment.id }}" data-quote-id="{{ comment.quote.id }}" data-add-comment-url="{% url 'add_comment' comment.quote.id %}">
+  <div>
+    <strong>{{ comment.user.username }}</strong>: {{ comment.text }} <small>— {{ comment.created_at|date:"d.m.Y H:i" }}</small>
+  </div>
+  <div class="grid" style="--pico-grid-gap: .5rem; align-items:center">
+    <form hx-post="{% url 'comment_like' comment.id %}" hx-target="#comment-{{ comment.id }}" hx-swap="outerHTML">{% csrf_token %}<button class="mini-btn" type="submit">👍 {{ comment.likes }}</button></form>
+    <form hx-post="{% url 'comment_dislike' comment.id %}" hx-target="#comment-{{ comment.id }}" hx-swap="outerHTML">{% csrf_token %}<button class="mini-btn" type="submit">👎 {{ comment.dislikes }}</button></form>
+    {% if request.user.is_authenticated %}
+      <button class="reply-btn" type="button">Ответить</button>
+    {% endif %}
+    {% if request.user == comment.user %}
+      <form hx-post="{% url 'comment_delete' comment.id %}" hx-confirm="Удалить комментарий?" hx-target="#comments" hx-swap="outerHTML" style="display:inline">{% csrf_token %}
+        <button class="mini-btn delete-btn" title="Удалить" type="submit">×</button>
+      </form>
+    {% endif %}
+  </div>
+  <div class="reply-form-container"></div>
+  {% if comment.replies.all %}
+    {% if comment.replies.all.count %}
+      <ul>
+        {% for reply in comment.replies.all %}
+          {% include 'quotes/_comment_item.html' with comment=reply %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endif %}
+</li>

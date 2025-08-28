@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Популярные цитаты{% endblock %}
+{% block content %}
+  <h2>Популярные цитаты</h2>
+
+  <form method="get" class="grid" style="align-items: end;">
+    <div>
+      <label>Источник
+        <input type="text" name="source" value="{{ request.GET.source }}" placeholder="Название источника" />
+      </label>
+    </div>
+    <div>
+      <label>Тип
+        <select name="type">
+          <option value="">Любой</option>
+          <option value="movie" {% if request.GET.type == 'movie' %}selected{% endif %}>Фильм</option>
+          <option value="book" {% if request.GET.type == 'book' %}selected{% endif %}>Книга</option>
+          <option value="series" {% if request.GET.type == 'series' %}selected{% endif %}>Сериал</option>
+          <option value="other" {% if request.GET.type == 'other' %}selected{% endif %}>Другое</option>
+        </select>
+      </label>
+    </div>
+    <div>
+      <label>Сортировка
+        <select name="sort">
+          <option value="likes" {% if request.GET.sort == 'likes' or not request.GET.sort %}selected{% endif %}>По лайкам</option>
+          <option value="views" {% if request.GET.sort == 'views' %}selected{% endif %}>По просмотрам</option>
+          <option value="created" {% if request.GET.sort == 'created' %}selected{% endif %}>По дате</option>
+        </select>
+      </label>
+    </div>
+    <div>
+      <button type="submit">Фильтр</button>
+    </div>
+  </form>
+
+  {% if page_obj %}
+    <ol start="{{ page_obj.start_index }}">
+      {% for q in page_obj.object_list %}
+        <li>
+          <blockquote class="quote-text">{{ q.text }}</blockquote>
+          <small>{{ q.source.name }} — 👍 {{ q.likes }} · 👎 {{ q.dislikes }} · 👁️ {{ q.views }}</small>
+        </li>
+      {% endfor %}
+    </ol>
+
+    <nav aria-label="pagination">
+      <ul>
+        {% if page_obj.has_previous %}
+          <li><a href="?page={{ page_obj.previous_page_number }}&source={{ request.GET.source }}&type={{ request.GET.type }}&sort={{ request.GET.sort }}">Назад</a></li>
+        {% else %}
+          <li aria-disabled="true"><a>Назад</a></li>
+        {% endif %}
+        <li>Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</li>
+        {% if page_obj.has_next %}
+          <li><a href="?page={{ page_obj.next_page_number }}&source={{ request.GET.source }}&type={{ request.GET.type }}&sort={{ request.GET.sort }}">Вперед</a></li>
+        {% else %}
+          <li aria-disabled="true"><a>Вперед</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% else %}
+    <p>Пока нет записей.</p>
+  {% endif %}
+{% endblock %}
+
+

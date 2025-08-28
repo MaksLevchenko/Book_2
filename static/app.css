@@ -1,0 +1,165 @@
+/* Global background */
+body { 
+  background:
+    radial-gradient(800px 300px at -10% -10%, rgba(110,231,249,.25), transparent 60%),
+    radial-gradient(800px 300px at 110% -10%, rgba(167,139,250,.25), transparent 60%),
+    radial-gradient(700px 280px at 50% 120%, rgba(248,113,113,.18), transparent 60%),
+    linear-gradient(180deg,#ffffff, #f7f7fb 40%, #f5f6ff);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background:
+      radial-gradient(900px 360px at -10% -10%, rgba(59,130,246,.18), transparent 60%),
+      radial-gradient(900px 360px at 110% -10%, rgba(147,51,234,.25), transparent 60%),
+      radial-gradient(800px 320px at 50% 120%, rgba(236,72,153,.18), transparent 60%),
+      linear-gradient(180deg,#0b1020, #0a0f1d 40%, #0a0f22);
+  }
+}
+
+/* Explicit backgrounds for manual theme switch */
+:root[data-theme='light'] body {
+  background:
+    radial-gradient(800px 300px at -10% -10%, rgba(110,231,249,.25), transparent 60%),
+    radial-gradient(800px 300px at 110% -10%, rgba(167,139,250,.25), transparent 60%),
+    radial-gradient(700px 280px at 50% 120%, rgba(248,113,113,.18), transparent 60%),
+    linear-gradient(180deg,#ffffff, #f7f7fb 40%, #f5f6ff);
+}
+:root[data-theme='dark'] body {
+  background:
+    radial-gradient(900px 360px at -10% -10%, rgba(59,130,246,.18), transparent 60%),
+    radial-gradient(900px 360px at 110% -10%, rgba(147,51,234,.25), transparent 60%),
+    radial-gradient(800px 320px at 50% 120%, rgba(236,72,153,.18), transparent 60%),
+    linear-gradient(180deg,#0b1020, #0a0f1d 40%, #0a0f22);
+}
+
+/* Basic layout tweaks */
+.app-nav { align-items: center; }
+.container { max-width: 980px; }
+
+/* Theme override via data-theme */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+/* Hero */
+.hero { background: radial-gradient(1000px 400px at 10% -20%, #eef7ff, transparent), radial-gradient(1000px 400px at 110% -20%, #f6efff, transparent); padding: 1.25rem 0 1.4rem; border-bottom: 1px solid rgba(0,0,0,.06); }
+.hero-inner { padding: .4rem 0 1rem; }
+.hero h1 { margin: 0 0 .25rem; font-weight: 700; letter-spacing: -0.02em; }
+.subtitle { color: #5b6573; margin: 0; }
+
+@media (prefers-color-scheme: dark) {
+  .hero { background: radial-gradient(1000px 400px at 10% -20%, #0f172a, transparent), radial-gradient(1000px 400px at 110% -20%, #111827, transparent); border-color: rgba(255,255,255,.06); }
+  .subtitle { color: #94a3b8; }
+}
+
+/* Main spacing */
+.main { padding-top: 1.2rem; padding-bottom: 2rem; }
+.site-footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,.06); color: #6b7280; }
+
+/* Quote card */
+.quote-card { padding: 1.2rem 1.4rem; border-radius: 16px; box-shadow: 0 10px 24px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.06); background: rgba(255,255,255,.82); backdrop-filter: blur(6px); }
+.quote-text { font-size: 1.28rem; line-height: 1.8; white-space: pre-wrap; margin: 0 0 0.9rem; position: relative; padding-left: 1.2rem; }
+.quote-text:before { content: "\201C"; position: absolute; left: 0; top: -0.2rem; font-size: 2.2rem; color: #e0e0e0; }
+.quote-meta { display:flex; justify-content: space-between; color: #666; font-size: .95rem; margin-bottom: .5rem; }
+.source { font-weight: 600; }
+.views { opacity: .8; }
+
+@media (prefers-color-scheme: dark) {
+  .quote-card { background: #0f172a; border-color: rgba(255,255,255,.18); box-shadow: 0 12px 28px rgba(0,0,0,0.55); }
+  .quote-text { color: #ffffff !important; font-size: 1.42rem; line-height: 2.05; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,.7); }
+  .quote-text:before { color: #60a5fa; }
+  .quote-meta { color: #e5e7eb; }
+}
+
+/* Ensure manual theme toggle also forces maximum contrast */
+:root[data-theme='dark'] .quote-card { background: #0f172a; border-color: rgba(255,255,255,.18); }
+:root[data-theme='dark'] .quote-text { color: #ffffff !important; font-size: 1.42rem; line-height: 2.05; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,.7); }
+:root[data-theme='dark'] .quote-text:before { color: #60a5fa; }
+:root[data-theme='dark'] .quote-meta { color: #e5e7eb; }
+
+/* Like buttons */
+.like-actions { gap: .6rem; }
+.like-actions form { display: inline-block; }
+.like-actions button { width: 100%; transition: transform .05s ease, box-shadow .2s ease; box-shadow: 0 0 0 rgba(0,0,0,0); }
+.like-actions button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.08); }
+.badge { display: inline-block; margin-left: .4rem; padding: .1rem .6rem; border-radius: 999px; background: #111827; color: #fff; font-weight: 700; letter-spacing: .02em; }
+@media (prefers-color-scheme: dark) {
+  .badge { background: #e5e7eb; color: #111827; }
+}
+:root[data-theme='dark'] .badge { background: #e5e7eb; color: #111827; }
+:root[data-theme='light'] .badge { background: #111827; color: #fff; }
+
+/* Muted helper */
+.muted { color: #777; }
+
+/* Forms */
+.quote-form textarea { min-height: 140px; }
+.errors { color: #b00020; }
+
+/* Lists */
+ol { padding-left: 1.2rem; }
+ol li { margin-bottom: .9rem; }
+blockquote { margin-bottom: .25rem; }
+
+/* Top nav polishing */
+.app-nav ul:first-child a { text-decoration: none; }
+.app-nav strong a { color: inherit; }
+
+/* Mini like/dislike buttons for comments */
+.mini-btn {
+  font-size: 0.92rem;
+  padding: 0.12rem 0.34rem;
+  line-height: 1;
+  border-radius: 6px;
+  min-width: 1.9em;
+}
+.mini-btn .badge { font-size: 0.88em; }
+
+.delete-quote-btn {
+  font-size: 1.38em;
+  padding: 0 0.44em;
+  background: #f3bac5;
+  color: #c72b15;
+  border: none;
+  border-radius: 50%;
+  line-height: 1;
+  font-weight: bold;
+  opacity: .78;
+  cursor: pointer;
+  transition: background .18s, opacity .18s;
+  box-shadow: none;
+}
+.delete-quote-btn:hover {
+  background: #fb8090;
+  color: #a10d00;
+  opacity: 1;
+}
+
+/* Ответить button */
+.reply-btn {
+  font-size: 0.95rem;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 0.17rem 0.8rem;
+  margin-left: .3rem;
+  cursor: pointer;
+  transition: background .13s;
+}
+.reply-btn:hover {
+  background: #e0e7ef;
+}
+@media (prefers-color-scheme: dark) {
+  .reply-btn {
+    background: #23262f;
+    border-color: #22232a;
+    color: #fff;
+  }
+  .reply-btn:hover {
+    background: #383a41;
+  }
+}

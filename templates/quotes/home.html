@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Случайная цитата{% endblock %}
+{% block content %}
+  <h2>Случайная цитата</h2>
+    {% if quote %}
+    <article class="quote-card" style="position:relative;">
+      {% if request.user.is_authenticated and quote.created_by_id == request.user.id %}
+        <form method="post" action="{% url 'quote_delete' quote.id %}" onsubmit="return confirm('Удалить цитату?')" style="position:absolute;top:.5rem;right:.7rem;z-index:2;">
+          {% csrf_token %}
+          <button class="mini-btn delete-quote-btn" title="Удалить цитату" type="submit">×</button>
+        </form>
+      {% endif %}
+      <blockquote class="quote-text">{{ quote.text }}</blockquote>
+      <div class="quote-meta">
+        <span class="source">{{ quote.source.name }} · {{ quote.source.get_type_display }}</span>
+        <span class="views">👁️ {{ quote.views }} · <a href="{% url 'quote_detail' quote.id %}">ссылка</a></span>
+      </div>
+      <div id="like-block" hx-target="#like-block" hx-swap="innerHTML">
+        {% include 'quotes/_like_block.html' %}
+      </div>
+      <section class="comments-card">
+        <h3>Комментарии</h3>
+        {% include 'quotes/_comments.html' %}
+        {% if request.user.is_authenticated %}
+          <form method="post" action="{% url 'add_comment' quote.id %}" hx-post="{% url 'add_comment' quote.id %}" hx-target="#comments" hx-swap="outerHTML" hx-on::after-request="this.reset()">
+            {% csrf_token %}
+            {{ comment_form.text }}
+            <button type="submit">Отправить</button>
+          </form>
+        {% else %}
+          <p class="muted">Чтобы комментировать, <a href="/login/">войдите</a></p>
+        {% endif %}
+      </section>
+    </article>
+    <div class="grid">
+      <a role="button" href="/" class="outline">Новая цитата</a>
+      {% if request.user.is_authenticated and quote.created_by_id == request.user.id %}
+        <form method="post" action="{% url 'quote_delete' quote.id %}" onsubmit="return confirm('Удалить цитату?')">{% csrf_token %}
+          <button class="secondary">Удалить цитату</button>
+        </form>
+      {% endif %}
+    </div>
+  {% else %}
+    <p>Пока нет цитат. Добавьте первую!</p>
+  {% endif %}
+{% endblock %}
+
+

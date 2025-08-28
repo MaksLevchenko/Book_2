@@ -1,0 +1,18 @@
+<div class="grid like-actions">
+  <form hx-post="{% url 'like_quote' quote.id %}">
+    {% csrf_token %}
+    <button type="submit" class="contrast" {% if voted %}disabled aria-disabled="true"{% endif %}>
+      👍 <span class="badge">{{ quote.likes }}</span>
+    </button>
+  </form>
+  <form hx-post="{% url 'dislike_quote' quote.id %}">
+    {% csrf_token %}
+    <button type="submit" class="secondary" {% if voted %}disabled aria-disabled="true"{% endif %}>
+      👎 <span class="badge">{{ quote.dislikes }}</span>
+    </button>
+  </form>
+</div>
+{% if voted %}
+  <small class="muted">Вы уже голосовали за эту цитату</small>
+{% endif %}
+
